@@ -1,0 +1,38 @@
+{
+   "Aluminio": {
+      "coeficiente": 0.000024
+   },
+   "Cobre": {
+      "coeficiente": 0.000017
+   },
+   "Aço": {
+      "coeficiente": 0.000011
+   },
+   "Bronze": {
+      "coeficiente": 0.000019
+   },
+   "Concreto": {
+      "coeficiente": 0.000017
+   },
+   "Vidro": {
+      "coeficiente": 0.000008
+   },
+   "Chumbo": {
+      "coeficiente": 0.000029
+   },
+   "Prata": {
+      "coeficiente": 0.000020
+   },
+   "Ouro": {
+      "coeficiente": 0.000014
+   },
+   "Silício": {
+      "coeficiente": 0.0000026
+   },
+   "Ferro":{
+      "coeficiente": 0.000012
+   },
+   "Platina":{
+      "coeficiente": 0.000009
+   }
+}
