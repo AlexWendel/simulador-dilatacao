@@ -1,4 +1,4 @@
-var listaDeMateriais = "https://gist.githubusercontent.com/AlexWendel/5dc895207dd96f688287822918800799/raw/94260fbc5ec38eeedfa20ffe6e80d6340f97f7f4/gistfile1.txt";
+var listaDeMateriais = "https://raw.githubusercontent.com/AlexWendel/simulador-dilatacao/master/dilata%C3%A7%C3%A3o.json";
 
 $(document).ready(function(){
     $.getScript("app.js");
@@ -6,20 +6,8 @@ $(document).ready(function(){
     materiais = $("#materiais");
     $.getJSON(listaDeMateriais, function(data){
         $.each(data, function(k, v){
-            var elemento = $("<div></div>").css({
-                "background-color": "blue",
-                "padding": "10px",
-                "color": "white",
-                "margin": "10px",
-                "max-width": "100px",
-                "min-width": "70px"
-            }).text(k);
-
-
-            elemento.on('click', function(e){
-                $(this).addClass("selected-button");
-            });
-            $(materiais).append(elemento);
+            exponential = v["coeficiente"].toExponential(2);;
+            registerObject(k, exponential.replace("e", "x10"));
         });
     });
 });

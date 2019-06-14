@@ -1,7 +1,7 @@
 const app = new PIXI.Application();
 const renderer = app.renderer;
 const stage = app.stage;
-const graphics = new PIXI.Graphics();
+
 const style = new PIXI.TextStyle({
     fontFamily: 'Ubuntu',
     fontSize: 36,
@@ -19,21 +19,41 @@ const style = new PIXI.TextStyle({
     wordWrapWidth: 440,
 });
 
-var menu = createMenu();
-function createMenu(){
-    var buttons = new PIXI.Container();
+var objects = new PIXI.Container();
 
+function registerObject(nome, coeficiente){
+    var text = new PIXI.Text(nome);
+    var coeficienttext = new PIXI.Text(coeficiente);
+    const graphics = new PIXI.Graphics();
+
+    graphics.interactive = true;
     graphics.beginFill(0xFF2342);
     graphics.drawRect(0,0,150,100);
     graphics.endFill();
-    graphics.interactive = true;
-    graphics.position.set(400, 300);
-    graphics.addChild(new PIXI.Text("Teste"));
-
-    buttons.addChild(graphics);
-    return buttons;
+    graphics.addChild(text);
+    graphics.addChild(coeficienttext);
+    graphics.position.set(400, 300);  
+    
+    
+    graphics.on('mousedown', onDragStart)
+    .on('touchstart', onDragStart)
+    .on('mouseup', onDragEnd)
+    .on('mouseupoutside', onDragEnd)
+    .on('touchend', onDragEnd)
+    .on('touchendoutside', onDragEnd)
+    .on('mousemove', onDragMove)
+    .on('touchmove', onDragMove);
+    
+    text.anchor.set(-0.2);
+    objects.addChild(graphics);
 }
-stage.addChild(menu);
+
+
+
+
+
+
+
 document.body.appendChild(app.view);
 
 var buttonEndTurn = new PIXI.Sprite(PIXI.Texture.fromImage('iron.png'));
@@ -123,3 +143,4 @@ function onDragMove()
 
 app.stage.addChild(buttonEndTurn);
 app.stage.addChild(fire);
+stage.addChild(objects);
