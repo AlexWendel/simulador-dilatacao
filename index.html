@@ -1,4 +1,5 @@
 
+
 <html>
         <head>
             <title>Testes</title>
@@ -27,7 +28,7 @@
                         const objects = new PIXI.Container();
                         const pixelConst = 37.7952755906;
                         var materiais = [];
-                        var calor = 45;
+                        var calor = 0;
         
                         // Retâgulo
                         class Material {
@@ -82,34 +83,27 @@
                         function aquecimento(material, temperatura_final, intervalo){
                             calor++;
                             temperatura_inicial = material.temperatura;
-
                             material.temperatura += calor / material.calorEspecifico;      
-
                             deltaTemp = (material.temperatura - material.temperatura_inicial);
-                            deformacao = material.comprimento * material.coeficiente * deltaTemp;
-                            console.debug(deformacao);
-                            console.debug("Como deformar: " + (deformacao * pixelConst));                    
+                            deformacao = material.comprimentoinicial * material.coeficiente * deltaTemp;
                             material.object.width = material.comprimento =  material.comprimentoinicial + deformacao;
+                            console.log(material.comprimentoinicial + deformacao);
 
-                            material.object.getChildAt(1).text = "T:"+material.temperatura;
-                            material.object.getChildAt(3).text = "L:"+ material.comprimento * (2.54 / 96);                            
-                            //$("#log").children("#dados-"+material.nome).html("<p>"+material.nome+"</p>"+"<p>Dilatou:"+(material.comprimento-material.comprimentoinicial)+"</p>");
+                            material.object.getChildAt(1).text = "T:"+ material.temperatura;
+                            material.object.getChildAt(3).text = "L:"+ material.comprimento+deformacao*(72/96).toFixed(2);                           
+
                             if (material.temperatura < temperatura_final){
-                                setTimeout(function(){
-                                    $.each(materiais, function(material){
-                                    aquecimento(materiais[material], temperatura_final);
-                                });                      
-                                }, 
-                                1000 * intervalo);  
-                            }                        
-                        
+                                setTimeout(function(){aquecimento(material, temperatura_final);}, intervalo * 1000);  
+                              }                        
+
                         }
         
-                        function iniciarSimulacao(temperatura_final){
+                        function iniciarSimulacao(){
                             $.each(materiais, function(material){
                                 intervalo = (parseInt($("#velocidade").val()) / 0.1);
-                                setTimeout(function(){aquecimento(materiais[material], temperatura_final, intervalo)}, 1000 * intervalo);
-                            });  
+                                temperatura_final = (parseInt($("#temperatura-final").val()));
+                                setTimeout(function(){aquecimento(materiais[material], temperatura_final, intervalo)}, 1000 * intervalo);                                                                
+                            }); 
                         }    
         
                         function criarMaterial(nome, comprimento, coeficiente, temperatura, caloresp){
@@ -123,7 +117,7 @@
                             $("#log").append(dados);
                         }
         
-                        $.getJSON("https://alexwendel.github.io/simulador-dilatacao/dilata%C3%A7%C3%A3o.json")
+                        $.getJSON("https://gist.githubusercontent.com/zeusvsh/1b7db3eedbfa0b5ec3ed79b5cb238a71/raw/73f4c288b8ddcf30f18ed33a997ecd29bfd8cfc9/gistfile1.txt")
                         .done(function(data){ 
                             $.each(data, function(material, dados){                       ;
                                 criarMaterial(material, 200, dados["coeficiente"],0, dados["calorespecifico"]);
@@ -141,7 +135,8 @@
                         resize();
         
                         $("#start-simulation").click(function(){
-                            iniciarSimulacao($("#temperatura-final").val())
+                            // iniciarSimulacao($("#temperatura-final").val());
+                            setTimeout(iniciarSimulacao, 1000);
                         });
 
                         $("#reset-simulation").click(
@@ -179,7 +174,6 @@
             <div id="menu" style="margin: 10px">
                 <h3>Valores da simulacão:</h3>
                 <div id="valores">
-                    <input id="calor" type="number" placeholder="Calor">
                     <input id="temperatura-final" type="number" placeholder="Temperatura final">
                 </div>
                 <button id="start-simulation">INICIAR</button> 
