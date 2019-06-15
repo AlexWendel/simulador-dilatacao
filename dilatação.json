@@ -1,38 +1,51 @@
 {
    "Aluminio": {
-      "coeficiente": 0.000024
+      "coeficiente": 0.000024,
+      "calorespecifico": 900
    },
    "Cobre": {
-      "coeficiente": 0.000017
+      "coeficiente": 0.000017,
+      "calorespecifico": 387
    },
    "Aço": {
-      "coeficiente": 0.000011
+      "coeficiente": 0.000011,
+      "calorespecifico": 502
    },
    "Bronze": {
-      "coeficiente": 0.000019
+      "coeficiente": 0.000019,
+      "calorespecifico": 385
    },
    "Concreto": {
-      "coeficiente": 0.000017
+      "coeficiente": 0.000017,
+      "calorespecifico": 840
+      
    },
    "Vidro": {
-      "coeficiente": 0.000008
+      "coeficiente": 0.000008,
+      "calorespecifico": 837
    },
    "Chumbo": {
-      "coeficiente": 0.000029
+      "coeficiente": 0.000029,
+      "calorespecifico": 128
    },
    "Prata": {
-      "coeficiente": 0.000020
+      "coeficiente": 0.000020,
+      "calorespecifico": 234
    },
    "Ouro": {
-      "coeficiente": 0.000014
+      "coeficiente": 0.000014,
+      "calorespecifico": 130
    },
    "Silício": {
-      "coeficiente": 0.0000026
+      "coeficiente": 0.0000026,
+      "calorespecifico": 703
    },
    "Ferro":{
-      "coeficiente": 0.000012
+      "coeficiente": 0.000012,
+      "calorespecifico": 448
    },
    "Platina":{
-      "coeficiente": 0.000009
+      "coeficiente": 0.000009,
+      "calorespecifico": 125
    }
 }
