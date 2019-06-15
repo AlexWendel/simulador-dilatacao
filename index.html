@@ -91,9 +91,9 @@
                             console.debug("Como deformar: " + (deformacao * pixelConst));                    
                             material.object.width = material.comprimento =  material.comprimentoinicial + deformacao;
 
-                            // material.object.getChildAt(1).text = "T:"+material.temperatura;
-                            // material.object.getChildAt(3).text = "L:"+ material.comprimento * (2.54 / 96);                            
-                            // $("#log").children("#dados-"+material.nome).html("<p>"+material.nome+"</p>"+"<p>Dilatou:"+(material.comprimento-material.comprimentoinicial)+"</p>");
+                            material.object.getChildAt(1).text = "T:"+material.temperatura;
+                            material.object.getChildAt(3).text = "L:"+ material.comprimento * (2.54 / 96);                            
+                            //$("#log").children("#dados-"+material.nome).html("<p>"+material.nome+"</p>"+"<p>Dilatou:"+(material.comprimento-material.comprimentoinicial)+"</p>");
                             if (material.temperatura < temperatura_final){
                                 setTimeout(function(){
                                     $.each(materiais, function(material){
@@ -180,7 +180,6 @@
                 <h3>Valores da simulacão:</h3>
                 <div id="valores">
                     <input id="calor" type="number" placeholder="Calor">
-                    <input id="velocidade" type="number" placeholder="Velocidade">
                     <input id="temperatura-final" type="number" placeholder="Temperatura final">
                 </div>
                 <button id="start-simulation">INICIAR</button> 
