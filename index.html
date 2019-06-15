@@ -1,117 +1,211 @@
 
 <html>
-<head>
-    <title>Testes</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.5.1/pixi.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-json/2.6.0/jquery.json.min.js"></script>
-    <style>
-    html, body {
-  width:  100%;
-  height: 100%;
-  margin: 0;
-}
-    </style>
-    <script>
-            name_label_css = {fontFamily : 'Arial', fontSize: 10, fill : 0xffffff, align : 'center'};
-            coeficient_label_css = {fontFamily : 'Arial', fontSize: 8, fill : 0xfff, align : 'center'}
-            running = true;
-
-            $(document).ready(function(){
-                const app = new PIXI.Application({autoResize: true,resolution: devicePixelRatio});
-                const renderer = app.renderer;
-                const stage = app.stage;
-                const objects = new PIXI.Container();
-                const pixelConst = 37.7952755906;
-
-                var multiplicador = $("#multiplicador").val();
-                var calor = $("#calor").val();
-                var tempo = (multiplicador * 10000000)
-
-                // Retâgulo
-                class Material {
-                    constructor(nome, coeficiente, comprimento, cor){
-                        this.nome = nome;
-                        this.comprimento = comprimento;
-                        this.coeficiente = coeficiente;
-                        this.cor = cor;
-                        this.temperatura = 0;
-                        this.temperatura_inicial = 0;
-                        this.calorEspecifico = 30;
-                        this.object = gerar_objeto(comprimento, cor, nome, coeficiente);
-                    }
-
-                    calcularDilatacao(temperatura, tempo){
-                        return (this.comprimento * this.coefiente) (temperatura0, temperatura);
-                    }
-                }
-
-                function gerar_objeto(comprimento, cor, nome, coeficiente){
-                    name_text = new PIXI.Text(nome, name_label_css);
-                    coeficient_text = new PIXI.Text(coeficiente, coeficient_label_css);
-                    object = new PIXI.Graphics();
-                    object.interactive = true;
-                    object.beginFill(cor);
-                    object.drawRect(0,0,comprimento, 50);
-                    object.addChild(name_text);
-                    name_text.anchor.set(-0.4);
-                    coeficient_text.anchor.set(0.9);
-                    object.addChild(coeficient_text);
-                    object.endFill();
-                    return object;
-                }
-
-                aluminio = new Material("Aluminio", 0.00006, 300, 0xFFF);
-                aluminio.temperatura = 0;
-                cobre = new Material("Cobre", 0.9, 145, 0x250025);
-                cobre.object.position.set(00, 50);
-
-                document.body.appendChild(app.view);
-                app.stage.addChild(aluminio.object);
-                app.stage.addChild(cobre.object);
-
-
-                function aquecimento(material, temperatura_final){
-                    if (!running){
-                        setTimeout(function(){aquecimento(material, temperatura_final)}, 1000);   
-                        return;
-                    }
-                    calor++;
-                    temperatura_inicial = material.temperatura;
-                    material.temperatura += calor/material.calorEspecifico;
-                    console.log("Temperatura:"+material.temperatura);
-
-                    if (material.temperatura < temperatura_final){
-                        setTimeout(function(){aquecimento(material, temperatura_final)}, 1000);   
-                    }
-
-                    deltaTemp = (material.temperatura - material.temperatura_inicial);
-                    deformacao = material.comprimento * material.coeficiente * deltaTemp;
-                    console.log(deformacao);
-                    console.log("Como deformar: " + (deformacao * pixelConst));
-
-                    material.object.scale.x += deformacao;
-                }
-
-                setTimeout(function(){aquecimento(aluminio, 1000)}, 1000);
-            })
-            .on("keydown", function(e){if (e.key == "h"){running = !running}});
-            
+        <head>
+            <title>Testes</title>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.5.1/pixi.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-json/2.6.0/jquery.json.min.js"></script>
+            <meta charset="utf-8">
+            <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+            <style>
+        * { margin:0; padding:0; } /* to remove the top and left whitespace */
         
-    </script>
-    <style>
-        canvas{
-            width: 100%;
-            height: auto;
-        }
-    </style>
-</head>
-<body>
-            <input id="calor" type="number" value=30/>
-            <span>Alumínio</span>
-            <input id="multiplicador" type="number" value=0.1/>
-</body>
-</html>
+        html, body {background-color: black;color: white; font-family: 'Roboto', sans-serif; width:100%; height:100%; } /* just to be sure these are full screen*/
+        
+        canvas { display:block; } /* To remove the scrollbars */
+            </style>
+            <script>
+                    name_label_css = {fontFamily : 'Arial', fontSize: 16, fill : 0xffffff, align : 'center'};
+                    coeficient_label_css = {fontFamily : 'Arial', fontSize: 14, fill : 0xffffff, align : 'center'}
+                    generic_style = {fontFamily : 'Arial', fontSize: 12, fill : 0xffffff, align : 'center'}
+                    running = true;
+        
+                    $(document).ready(function(){
+                        const app = new PIXI.Application({autoResize: true, resolution: devicePixelRatio});
+                        const renderer = app.renderer;
+                        const stage = app.stage;
+                        const objects = new PIXI.Container();
+                        const pixelConst = 37.7952755906;
+                        var materiais = [];
+                        var calor = 45;
+        
+                        // Retâgulo
+                        class Material {
+                            constructor(nome, coeficiente, comprimento, calorEspecifico, cor){
+                                this.nome = nome;
+                                this.comprimento = comprimento;
+                                this.coeficiente = coeficiente;
+                                this.cor = cor;
+                                this.temperatura = 0;
+                                this.temperatura_inicial = 0;
+                                this.calorEspecifico = calorEspecifico;
+                                this.comprimentoinicial = comprimento;
+                                this.object = gerar_objeto(this);
+                            }
+        
+                            calcularDilatacao(temperatura, tempo){
+                                return (this.comprimento * this.coefiente) (temperatura0, temperatura);
+                            }
+                        }
+        
+                        function gerar_objeto(material){
+                            coeficiente = material.coeficiente;
+                            nome = material.nome;
+                            cor = material.cor;
+                            comprimento = material.comprimento;
+        
+                            name_text = new PIXI.Text(nome, name_label_css);
+                            coeficient_text = new PIXI.Text(coeficiente.toExponential().replace("e","x10"), coeficient_label_css);
+                            vagabu = new PIXI.Text("Temp:"+ material.temperatura, generic_style);
+                            length_text = new PIXI.Text("L="+ material.comprimento, generic_style);
+        
+                            object = new PIXI.Graphics();
+                            object.interactive = true;
+                            object.beginFill(cor);
+                            object.drawRect(0,0,comprimento, 50);
+        
+                            object.addChild(name_text);
+        
+                            vagabu.anchor.set(0, -2);
+                            object.addChild(vagabu);
+                            
+                            coeficient_text.anchor.set(-2.5, -1);
+                            object.addChild(coeficient_text);
+        
+                            length_text.anchor.set(0, -3);
+                            object.addChild(length_text);
+        
+                            object.endFill();
+                            return object;
+                        }
+        
+                        function aquecimento(material, temperatura_final, intervalo){
+                            calor++;
+                            temperatura_inicial = material.temperatura;
 
+                            material.temperatura += calor / material.calorEspecifico;      
 
+                            deltaTemp = (material.temperatura - material.temperatura_inicial);
+                            deformacao = material.comprimento * material.coeficiente * deltaTemp;
+                            console.debug(deformacao);
+                            console.debug("Como deformar: " + (deformacao * pixelConst));                    
+                            material.object.width = material.comprimento =  material.comprimentoinicial + deformacao;
 
+                            // material.object.getChildAt(1).text = "T:"+material.temperatura;
+                            // material.object.getChildAt(3).text = "L:"+ material.comprimento * (2.54 / 96);                            
+                            // $("#log").children("#dados-"+material.nome).html("<p>"+material.nome+"</p>"+"<p>Dilatou:"+(material.comprimento-material.comprimentoinicial)+"</p>");
+                            if (material.temperatura < temperatura_final){
+                                setTimeout(function(){
+                                    $.each(materiais, function(material){
+                                    aquecimento(materiais[material], temperatura_final);
+                                });                      
+                                }, 
+                                1000 * intervalo);  
+                            }                        
+                        
+                        }
+        
+                        function iniciarSimulacao(temperatura_final){
+                            $.each(materiais, function(material){
+                                intervalo = (parseInt($("#velocidade").val()) / 0.1);
+                                setTimeout(function(){aquecimento(materiais[material], temperatura_final, intervalo)}, 1000 * intervalo);
+                            });  
+                        }    
+        
+                        function criarMaterial(nome, comprimento, coeficiente, temperatura, caloresp){
+                            console.log(nome+"."+comprimento+"."+temperatura+"."+caloresp);
+                            material = new Material(nome, coeficiente, comprimento, caloresp, (Math.random()*0xFFFFFF<<0));
+                            material.temperatura = temperatura;
+                            material.object.position.set(0, 55 * materiais.length);
+                            app.stage.addChild(material.object);
+                            materiais.push(material);
+                            dados = $("<div id=dados-"+nome+"></div>");
+                            $("#log").append(dados);
+                        }
+        
+                        $.getJSON("https://alexwendel.github.io/simulador-dilatacao/dilata%C3%A7%C3%A3o.json")
+                        .done(function(data){ 
+                            $.each(data, function(material, dados){                       ;
+                                criarMaterial(material, 200, dados["coeficiente"],0, dados["calorespecifico"]);
+                            });     
+                            
+                        });                
+                        
+                        document.body.appendChild(app.view);              
+        
+                        window.addEventListener('resize', resize);
+                        function resize() {
+                            app.renderer.resize(window.innerWidth, window.innerHeight);
+                            $('#menu').height(window.innerHeight);
+                        }
+                        resize();
+        
+                        $("#start-simulation").click(function(){
+                            iniciarSimulacao($("#temperatura-final").val())
+                        });
+
+                        $("#reset-simulation").click(
+                            function(){
+                                $.each()
+                            }
+                        );
+                        
+                        $("#create-custom").click(function(){
+                            nome = $("#custom-nome").val();
+                            comprimento = $("#custom-comprimento").val();
+                            calorespecifico = $("#custom-calesp").val();
+                            temperatutrainicial = $("#custom-t0").val();
+                            coeficiente = parseFloat($("#custom-coeficiente").val());
+                           
+                            criarMaterial(nome, comprimento, coeficiente, 
+                                temperatutrainicial, calorespecifico);
+                        });
+                    });
+                    
+        
+            </script>
+            <style>
+                #menu{
+                    position: absolute;
+                    right: 0;
+                    background-color:darkgreen;
+                    max-width: 200px;
+                    padding: 40px;
+                    text-align: center;
+                }
+            </style>
+        </head>
+        <body>
+            <div id="menu" style="margin: 10px">
+                <h3>Valores da simulacão:</h3>
+                <div id="valores">
+                    <input id="calor" type="number" placeholder="Calor">
+                    <input id="velocidade" type="number" placeholder="Velocidade">
+                    <input id="temperatura-final" type="number" placeholder="Temperatura final">
+                </div>
+                <button id="start-simulation">INICIAR</button> 
+        
+                <h3>Adicionar material:</h3>
+                <div id="valores-custom">
+                    <input id="custom-nome" placeholder="Nome do material" type="text">
+                    <input id="custom-calesp" type="number" placeholder="Calor específico">
+                    <input id="custom-comprimento" placeholder="Comprimento" type="number"> 
+                    <input id="custom-coeficiente" placeholder="Coeficiente" type="number"> 
+                    <input id="custom-t0" placeholder="Temperatura inicial" type="number">           
+                    <button id="create-custom">Adicionar</button>
+                </div>
+                        
+        
+                      
+            </div>
+
+            <div id="log">
+
+            </div>
+        
+        </body>
+        </html>
+        
+        
+        
+        
