@@ -13,7 +13,7 @@ function linear(){
         });
         return;
     }
-    temperatura_final = (parseInt($("#temperatura-final").val()));
+    temperatura_final = (parseFloat($("#temperatura-final").val()));
     
     // setTimeout(function(){aquecimento_linear(material, temperatura_final);}, 1 * 1000);
 
