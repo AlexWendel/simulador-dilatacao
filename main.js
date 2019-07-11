@@ -63,7 +63,7 @@ $(document).ready(function(){
     });
     $('#menu').height(window.innerHeight);
     
-    $.getJSON("https://alexwendel.github.io/simulador-dilatacao/dilata%C3%A7%C3%A3o.json")
+    $.getJSON("https://pastebin.com/raw/6c8MtxTA")
     .done(function (data) {
         $.each(data, function (material, dados) {
             tipo = ~~(dados["tipo"] == "linear");
