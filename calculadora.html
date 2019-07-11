@@ -110,6 +110,11 @@
                     <label for="vol-ftemp">Temperatura final</label>
                     <input type="text" class="form-control" id="vol-ftemp" placeholder="T Final" value="" required>
                 </div>
+                <div class="col-md-2 mb-2">
+                    <label for="vol-ftemp">Sólido?</label>
+                    <input class="form-check-input" type="checkbox" checked id="vol-solido">
+                </div>              
+               
                 <button id="vol-calc" type="button" class="btn btn-light">=</button> 
                  
                 <div class="col-md-2 mb-2">
@@ -128,7 +133,7 @@ $(document).ready(function(){
         alpha = parseFloat($("#sup-cdil").val());
         tempf = parseFloat($("#sup-ftemp").val());
         temp0 = parseFloat($("#sup-itemp").val());
-        $("#sup-def").val(L0*alpha*(tempf-temp0));
+        $("#sup-def").val(L0*(2*alpha)*(tempf-temp0));
     });
 
     $("#vol-calc").click(function(){
@@ -136,7 +141,10 @@ $(document).ready(function(){
         alpha = parseFloat($("#vol-cdil").val());
         tempf = parseFloat($("#vol-ftemp").val());
         temp0 = parseFloat($("#vol-itemp").val());
-        $("#vol-def").val(L0*alpha*(tempf-temp0));
+        if($("#vol-solido").prop("checked") == true){
+          $("#vol-def").val(L0*(3*alpha)*(tempf-temp0));
+        }
+        $("#vol-def").val(L0*alpha*(tempf-temp0));   
     });
 
     $("#lin-calc").click(function(){
