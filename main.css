@@ -1,0 +1,22 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+/* to remove the top and left whitespace */
+html,
+body {
+    background-color: black;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+}
+/* just to be sure these are full screen*/
+canvas {
+    display: block;
+}
+ 
+#menu {
+    float: right;
+    width: 400px;
+    position: absolute;
+    right: 0;
+}

@@ -1,0 +1,161 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <meta name="description" content="">
+    <title>Calculadora de dilatação</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="form-validation.css" rel="stylesheet">
+  </head>
+  <body class="bg-light">
+    <div class="container">
+  <div class="py-5 text-center">
+    <h2>Calculadora de Dilatação</h2>
+    <p class="lead">Digite os valores das variáveis para descobrir a dilatação sofrida por um material ou líquido/gás.</p>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 order-md-1">
+      <h4 class="mb-3">Dilatação linear <span><h6>ΔL = L0.α.Δθ</h6></span></h4>
+      <form class="needs-validation" novalidate>
+        <div class="row">
+          <div class="col-md-2">
+            <label for="lin-cinicial">Comprimento inicial</label>
+            <input type="text" class="form-control" id="lin-cinicial" placeholder="L0" value="" required>
+          </div>
+          <div class="col-md-2 mb-2">
+            <label for="lin-cdil">Coeficiente de dilatação</label>
+            <input type="text" class="form-control" id="lin-cdil" placeholder="α" value="" required>
+          </div>
+          <div class="col-md-2 mb-2">
+                <label for="lin-itemp">Temperatura inicial</label>
+                <input type="text" class="form-control" id="lin-itemp" placeholder="To" value="" required>
+            </div>     
+            <div class="col-md-2 mb-2">
+                <label for="lin-ftemp">Temperatura final</label>
+                <input type="text" class="form-control" id="lin-ftemp" placeholder="T Final" value="" required>
+            </div>
+            <button id="lin-calc" type="button" class="btn btn-light">=</button>    
+            <div class="col-md-2 mb-2">
+                    <label for="lin-def">Deformação</label>
+                    <input type="text" class="form-control" id="lin-def" placeholder="" value="" required>
+            </div>                                        
+        </div>
+
+        <h4 class="mb-3">Dilatação superficial <span><h6>ΔA = A0.β.Δθ</h6></span></h4>
+        <form class="needs-validation" novalidate>
+          <div class="row">
+            <div class="col-md-2">
+              <label for="sup-cinicial">Comprimento inicial</label>
+              <input type="text" class="form-control" id="sup-cinicial" placeholder="A0" value="" required>
+            </div>
+            <div class="col-md-2 mb-2">
+              <label for="sup-cdil">Coeficiente de dilatação</label>
+              <input type="text" class="form-control" id="sup-cdil" placeholder="β" value="" required>
+            </div>
+            <div class="col-md-2 mb-2">
+                  <label for="sup-itemp">Temperatura inicial</label>
+                  <input type="text" class="form-control" id="sup-itemp" placeholder="T Inicial" value="" required>
+              </div>     
+              <div class="col-md-2 mb-2">
+                  <label for="sup-ftemp">Temperatura final</label>
+                  <input type="text" class="form-control" id="sup-ftemp" placeholder="T Final" value="" required>
+              </div>
+              <button id="sup-calc" type="button" class="btn btn-light">=</button>   
+              <div class="col-md-2 mb-2">
+                      <label for="sup-def">Deformação</label>
+                      <input type="text" class="form-control" id="sup-def" placeholder="" value="" required>
+              </div>                                            
+          </div>
+
+          <h4 class="mb-3">Dilatação volumétrica <span><h6>ΔV = V0.γ.Δθ</h6></span></h4>
+          <form class="needs-validation" novalidate>
+            <div class="row">
+              <div class="col-md-2">
+                <label for="vol-cinicial">Comprimento inicial</label>
+                <input type="text" class="form-control" id="vol-cinicial" placeholder="V0" value="" required>
+              </div>
+              <div class="col-md-2 mb-2">
+                <label for="vol-cdil">Coeficiente de dilatação</label>
+                <input type="text" class="form-control" id="vol-cdil" placeholder="γ" value="" required>
+              </div>
+              <div class="col-md-2 mb-2">
+                    <label for="vol-itemp">Temperatura inicial</label>
+                    <input type="text" class="form-control" id="vol-itemp" placeholder="T Inicial" value="" required>
+                </div>     
+                <div class="col-md-2 mb-2">
+                    <label for="vol-ftemp">Temperatura final</label>
+                    <input type="text" class="form-control" id="vol-ftemp" placeholder="T Final" value="" required>
+                </div>
+                <button id="vol-calc" type="button" class="btn btn-light">=</button> 
+                 
+                <div class="col-md-2 mb-2">
+                    <label for="vol-def">Deformação</label>
+                    <input type="text" class="form-control" id="vol-def" placeholder="" value="" required>
+                </div>                                         
+            </div>    
+  </div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+    $("#sup-calc").click(function(){
+        L0 = parseFloat($("#sup-cinicial").val());
+        alpha = parseFloat($("#sup-cdil").val());
+        tempf = parseFloat($("#sup-ftemp").val());
+        temp0 = parseFloat($("#sup-itemp").val());
+        $("#sup-def").val(L0*alpha*(tempf-temp0));
+    });
+
+    $("#vol-calc").click(function(){
+        L0 = parseFloat($("#vol-cinicial").val());
+        alpha = parseFloat($("#vol-cdil").val());
+        tempf = parseFloat($("#vol-ftemp").val());
+        temp0 = parseFloat($("#vol-itemp").val());
+        $("#vol-def").val(L0*alpha*(tempf-temp0));
+    });
+
+    $("#lin-calc").click(function(){
+        L0 = parseFloat($("#lin-cinicial").val());
+        alpha = parseFloat($("#lin-cdil").val());
+        tempf = parseFloat($("#lin-ftemp").val());
+        temp0 = parseFloat($("#lin-itemp").val());
+        console.log(L0);
+        console.log(alpha);
+        console.log(tempf);
+        console.log(temp0);
+        $("#lin-def").val(L0*alpha*(tempf-temp0).toFixed(3));
+    });
+
+});
+</script>
+
+<footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">&copy; 2019 - Turma da Sônica</p>
+      </footer>
+</body>
+</html>
