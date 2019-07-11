@@ -141,10 +141,12 @@ $(document).ready(function(){
         alpha = parseFloat($("#vol-cdil").val());
         tempf = parseFloat($("#vol-ftemp").val());
         temp0 = parseFloat($("#vol-itemp").val());
-        if($("#vol-solido").prop("checked") == true){
+        if($('#vol-solido').prop('checked')){
           $("#vol-def").val(L0*(3*alpha)*(tempf-temp0));
         }
-        $("#vol-def").val(L0*alpha*(tempf-temp0));   
+        else{
+          $("#vol-def").val(L0*alpha*(tempf-temp0));
+        }   
     });
 
     $("#lin-calc").click(function(){
