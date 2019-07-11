@@ -7,6 +7,12 @@ function superficial(){
 function linear(){
     // M.toast({html: 'Linear'}); 
     intervalo = (1 / 0.1);
+    if($("#temperatura-final").val() == undefined){
+        $.each(materiais, function(material){
+            material.temperatura = material.temperatura_inicial;
+        });
+        return;
+    }
     temperatura_final = (parseInt($("#temperatura-final").val()));
     
     // setTimeout(function(){aquecimento_linear(material, temperatura_final);}, 1 * 1000);
@@ -62,6 +68,16 @@ $(document).ready(function(){
         iniciar_simulacao();
     });
     $('#menu').height(window.innerHeight);
+    console.log("YA");
+    console.log($('#add-custom'));
+    $('#add-custom').click(function(){
+        material = $("#custom-name").val();
+        comprimentoInicial = parseFloat($("#custom-length").val());
+        coeficienteDil = parseFloat($('#custom-coefDil').val());
+        // tempInicial = parseFloat($('#custom-tempInicial').val());
+        tempInicial = 0;
+        criarMaterial(material, comprimentoInicial, coeficienteDil, tempInicial, 0, 1);
+    });
     
     $.getJSON("https://alexwendel.github.io/simulador-dilatacao/dilata%C3%A7%C3%A3o.json")
     .done(function (data) {
