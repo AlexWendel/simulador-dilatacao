@@ -63,7 +63,7 @@ $(document).ready(function(){
     });
     $('#menu').height(window.innerHeight);
     
-    $.getJSON("https://pastebin.com/raw/6c8MtxTA")
+    $.getJSON("dilatação.json")
     .done(function (data) {
         $.each(data, function (material, dados) {
             tipo = ~~(dados["tipo"] == "linear");
