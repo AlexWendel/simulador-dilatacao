@@ -9,7 +9,9 @@ function linear(){
     intervalo = (1 / 0.1);
     temperatura_final = (parseInt($("#temperatura-final").val()));
     
-    setTimeout(function(){aquecimento_linear(material, temperatura_final);}, 1 * 1000);
+    // setTimeout(function(){aquecimento_linear(material, temperatura_final);}, 1 * 1000);
+
+    aquecimento_linear(Material, temperatura_final, 0);
 }
 
 
@@ -42,7 +44,6 @@ function aquecimento_linear(material, temperatura_final, intervalo) {
 
 function iniciar_simulacao(){
     dilatacao = $("input:radio:checked").map(function(i, el){return $(el).data('type')}).get();
-    
     // if (dilatacao == "superficial"){
     //     superficial();
     // }
@@ -62,7 +63,7 @@ $(document).ready(function(){
     });
     $('#menu').height(window.innerHeight);
     
-    $.getJSON("https://raw.githubusercontent.com/AlexWendel/simulador-dilatacao/master/dilata%C3%A7%C3%A3o.json")
+    $.getJSON("https://alexwendel.github.io/simulador-dilatacao/dilata%C3%A7%C3%A3o.json")
     .done(function (data) {
         $.each(data, function (material, dados) {
             tipo = ~~(dados["tipo"] == "linear");
