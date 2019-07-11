@@ -28,8 +28,6 @@ function criarMaterial(nome, comprimento, coeficiente, temperatura, caloresp, ti
     app.stage.addChild(material.object);
     materiais.push(material);
     // console.debug(nome + " criado!")
-    // dados = $("<div id=dados-" + nome + "></div>");
-    // $("#log").append(dados);
 }
 
 console.log("MATERIAIS LOADED!")

@@ -63,10 +63,11 @@ $(document).ready(function(){
     });
     $('#menu').height(window.innerHeight);
     
-    $.getJSON("dilatação.json")
+    $.getJSON("https://alexwendel.github.io/simulador-dilatacao/dilata%C3%A7%C3%A3o.json")
     .done(function (data) {
         $.each(data, function (material, dados) {
-            tipo = ~~(dados["tipo"] == "linear");
+            console.log(material);
+            tipo = 1.
             if(tipo){
                 coeficienteDil = dados["coeficiente"];
                 calorEsp = dados["calorespecifico"];
